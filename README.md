@@ -85,7 +85,7 @@ UART Debug	UART over USB	USB Serial Monitor
 Date	Milestone
 Week 1	Keypad input, PIN matching logic working
 Week 2	Servo unlock + LCD feedback integrated
-Week 3	Lockout logic, UART logs, buzzer + cleanup
+Week 3	Lockout logic, UART logs, buzzer + cleanup.
 
 
 
