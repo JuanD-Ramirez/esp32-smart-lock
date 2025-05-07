@@ -1,32 +1,36 @@
-# Prerequisites
-*.d
+# === PlatformIO Build Artifacts ===
+.pio/
+.pioenvs/
+.piolibdeps/
+build/
+libdeps/
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# === VS Code Settings ===
+.vscode/
+*.code-workspace
 
-# Precompiled Headers
-*.gch
-*.pch
+# === Arduino/PlatformIO Caches ===
+*.elf
+*.bin
+*.hex
+*.map
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# === OS/System Files ===
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+desktop.ini
 
-# Fortran module files
-*.mod
-*.smod
+# === Python Bytecode (if you use Python for utilities) ===
+__pycache__/
+*.py[cod]
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+# === Logs ===
+*.log
 
-# Executables
-*.exe
-*.out
-*.app
+# === Backup/Temp Files ===
+*.bak
+*.tmp
+*.swp
+*.swo
