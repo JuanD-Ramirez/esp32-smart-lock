@@ -1,18 +1,37 @@
+/**
+ * @file main.cpp
+ * @brief Entry point for ESP32 Smart Lock Project
+ * 
+ * Initializes the serial interface and keypad system
+ * and continuously reads key presses from keypad.
+ */
 #include <Arduino.h>
+#include "KeypadManager.h"
 
-// put function declarations here:
-int myFunction(int, int);
+// KeypadManager instance used to access keypad functionality
+KeypadManager keypadMgr;
 
+/**
+ * @brief Arduino setup function.
+ * 
+ * Initializes serial communication and the keypad hardware.
+ */
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  Serial.begin(115200);
+  keypadMgr.begin();
+  Serial.println("Keypad Test Ready");
 }
 
+/**
+ * @brief Arduino main loop function.
+ * 
+ * Continuously polls the keypad for key presses and logs them to the serial monitor.
+ */
 void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  char key = keypadMgr.getKey();
+  if(key != '\0') {
+    Serial.print("key pressed: ");
+    Serial.println(key);
+  }
+  delay(50);
 }
