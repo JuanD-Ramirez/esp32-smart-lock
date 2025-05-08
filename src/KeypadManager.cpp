@@ -29,6 +29,7 @@ Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, Rows, Cols);
 
 /**
  * @brief Constructor for KeypadManager.
+ * 
  */
 KeypadManager::KeypadManager() {}
 

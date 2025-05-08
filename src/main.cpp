@@ -11,6 +11,12 @@
 // KeypadManager instance used to access keypad functionality
 KeypadManager keypadMgr;
 
+const int PIN_LENGTH = 4;
+char correctPin[PIN_LENGTH + 1] = "1234";
+char enteredPin[PIN_LENGTH + 1];
+int pinIndex = 0;
+bool locked = true;
+
 /**
  * @brief Arduino setup function.
  * 
@@ -19,7 +25,7 @@ KeypadManager keypadMgr;
 void setup() {
   Serial.begin(115200);
   keypadMgr.begin();
-  Serial.println("Keypad Test Ready");
+  Serial.println("Enter a 4-digit pin");
 }
 
 /**
@@ -29,9 +35,46 @@ void setup() {
  */
 void loop() {
   char key = keypadMgr.getKey();
+
+  //if key is pressed
   if(key != '\0') {
-    Serial.print("key pressed: ");
-    Serial.println(key);
+
+    if (key >= '0' && key <= '9') {
+
+      if (pinIndex < PIN_LENGTH) {
+        enteredPin[pinIndex] = key;
+        pinIndex++;
+        enteredPin[pinIndex] = '\0';  // Null-terminate after adding
+      
+        // Print current PIN state
+        Serial.print("Entered so far: ");
+        Serial.println(enteredPin);
+      }
+
+      //when 4 digits are entered
+      if(pinIndex == PIN_LENGTH) {
+        enteredPin[PIN_LENGTH] = '\0'; //null terminate string
+
+        //Compare if entered pin is the correct pin
+        if (strcmp(enteredPin, correctPin) == 0) {
+          Serial.println("\n Access Granted");
+          locked = false;
+        } else {
+          Serial.println("\n Access Denied");
+        }
+
+        //Reset for next atempt
+        pinIndex = 0;
+        delay(1000);
+        Serial.println("Enter a 4 digit pin");
+      }
+
+    } else if (key == '*') {
+
+      //Reset user input on *
+      Serial.println("\n input cleared");
+      pinIndex = 0;
+    }
   }
   delay(50);
 }
