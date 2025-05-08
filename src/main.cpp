@@ -7,9 +7,13 @@
  */
 #include <Arduino.h>
 #include "KeypadManager.h"
+#include "DisplayManager.h"
 
 // KeypadManager instance used to access keypad functionality
 KeypadManager keypadMgr;
+
+//DisplayManager instance used to display messages
+DisplayManager display;
 
 const int PIN_LENGTH = 4;
 char correctPin[PIN_LENGTH + 1] = "1234";
@@ -25,7 +29,7 @@ bool locked = true;
 void setup() {
   Serial.begin(115200);
   keypadMgr.begin();
-  Serial.println("Enter a 4-digit pin");
+  display.begin();
 }
 
 /**
@@ -46,9 +50,7 @@ void loop() {
         pinIndex++;
         enteredPin[pinIndex] = '\0';  // Null-terminate after adding
       
-        // Print current PIN state
-        Serial.print("Entered so far: ");
-        Serial.println(enteredPin);
+        display.showPinProgress(enteredPin);
       }
 
       //when 4 digits are entered
@@ -57,22 +59,22 @@ void loop() {
 
         //Compare if entered pin is the correct pin
         if (strcmp(enteredPin, correctPin) == 0) {
-          Serial.println("\n Access Granted");
+          display.showMessage("Access Granted");
           locked = false;
         } else {
-          Serial.println("\n Access Denied");
+          display.showMessage("Access Denied");
         }
 
         //Reset for next atempt
         pinIndex = 0;
         delay(1000);
-        Serial.println("Enter a 4 digit pin");
+        display.clear();
       }
 
     } else if (key == '*') {
 
       //Reset user input on *
-      Serial.println("\n input cleared");
+      display.clear();
       pinIndex = 0;
     }
   }
