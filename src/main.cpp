@@ -8,6 +8,7 @@
 #include <Arduino.h>
 #include "KeypadManager.h"
 #include "DisplayManager.h"
+#include "LockController.h"
 
 // KeypadManager instance used to access keypad functionality
 KeypadManager keypadMgr;
@@ -15,11 +16,33 @@ KeypadManager keypadMgr;
 //DisplayManager instance used to display messages
 DisplayManager display;
 
+// servo instance used to control lock
+LockController lockMotor(22);
+
+///Password Lenght
 const int PIN_LENGTH = 4;
+
+/// the currently configured pin
 char correctPin[PIN_LENGTH + 1] = "1234";
+
+/// Buffer for the users input as they type
 char enteredPin[PIN_LENGTH + 1];
+
+/// Current index within the entered pin
 int pinIndex = 0;
+
+/// Tracks whether the lock is currently engaged
 bool locked = true;
+
+/**
+ * @brief Unlocks the lock, displays success, and relocks after a delay.
+ */
+void unlockLock() {
+  lockMotor.unlock();
+  display.showMessage("Access Granted");
+  delay(3000);
+  lockMotor.lock();
+}
 
 /**
  * @brief Arduino setup function.
@@ -30,6 +53,7 @@ void setup() {
   Serial.begin(115200);
   keypadMgr.begin();
   display.begin();
+  lockMotor.begin();
 }
 
 /**
@@ -60,6 +84,7 @@ void loop() {
         //Compare if entered pin is the correct pin
         if (strcmp(enteredPin, correctPin) == 0) {
           display.showMessage("Access Granted");
+          unlockLock();
           locked = false;
         } else {
           display.showMessage("Access Denied");

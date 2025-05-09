@@ -1,6 +1,6 @@
 /**
  * @file DisplayManager.h
- * @brief declaratoin of the DisplayManager class for handling i2c lcd output
+ * @brief declaration of the DisplayManager class for handling lcd output
  * 
  * this class provides a simple interface to an i2c connected 16 x 2 lcd display.
  * for use in a keyboard- controlled smart lock project
