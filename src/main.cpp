@@ -9,6 +9,7 @@
 #include "KeypadManager.h"
 #include "DisplayManager.h"
 #include "LockController.h"
+#include "PinStorage.h"
 
 // KeypadManager instance used to access keypad functionality
 KeypadManager keypadMgr;
@@ -34,6 +35,9 @@ int pinIndex = 0;
 /// Tracks whether the lock is currently engaged
 bool locked = true;
 
+/// pinstore instance to save pin to EEPROM
+PinStorage pinStore(PIN_LENGTH, 0);
+
 /**
  * @brief Unlocks the lock, displays success, and relocks after a delay.
  */
@@ -42,6 +46,11 @@ void unlockLock() {
   display.showMessage("Access Granted");
   delay(3000);
   lockMotor.lock();
+}
+
+void passwordChange() {
+  display.showMessage("Click * to change the pin");
+  
 }
 
 /**
@@ -54,6 +63,8 @@ void setup() {
   keypadMgr.begin();
   display.begin();
   lockMotor.begin();
+  pinStore.begin();
+  Serial.println(pinStore.getPin());
 }
 
 /**
@@ -82,11 +93,32 @@ void loop() {
         enteredPin[PIN_LENGTH] = '\0'; //null terminate string
 
         //Compare if entered pin is the correct pin
-        if (strcmp(enteredPin, correctPin) == 0) {
+        if (strcmp(enteredPin, pinStore.getPin()) == 0) {
           display.showMessage("Access Granted");
           unlockLock();
           locked = false;
-        } else {
+        } 
+
+        //pin overide option
+        else if(strcmp(enteredPin, "0101") == 0) {
+          display.showMessage("Enter a new pin to be saved");
+          pinIndex = 0;
+          while (pinIndex < PIN_LENGTH) {
+            char tempKey = keypadMgr.getKey();
+            if (tempKey >= '0' && tempKey <= '9') {
+              enteredPin[pinIndex] = tempKey;
+              pinIndex++;
+              enteredPin[pinIndex] = '\0';
+
+              display.showPinProgress(enteredPin);
+            }
+          }
+          pinStore.savePin(enteredPin);
+          display.showMessage("PIN Updated");
+          delay(2000);
+        }
+
+        else {
           display.showMessage("Access Denied");
         }
 
