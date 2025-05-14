@@ -64,7 +64,6 @@ void setup() {
   display.begin();
   lockMotor.begin();
   pinStore.begin();
-  Serial.println(pinStore.getPin());
 }
 
 /**
@@ -103,19 +102,47 @@ void loop() {
         else if(strcmp(enteredPin, "0101") == 0) {
           display.showMessage("Enter a new pin to be saved");
           pinIndex = 0;
+
+          //Enter new Pin
           while (pinIndex < PIN_LENGTH) {
             char tempKey = keypadMgr.getKey();
             if (tempKey >= '0' && tempKey <= '9') {
               enteredPin[pinIndex] = tempKey;
               pinIndex++;
               enteredPin[pinIndex] = '\0';
-
               display.showPinProgress(enteredPin);
             }
+            delay(50);
           }
-          pinStore.savePin(enteredPin);
-          display.showMessage("PIN Updated");
+
+          delay(500);
+          pinIndex = 0;
+          display.showMessage("Confirm pin");
+
+          char tempPin[PIN_LENGTH + 1];
+
+          //Confirm New Pin
+          while(pinIndex < PIN_LENGTH) {
+            char tempKey = keypadMgr.getKey();
+            if (tempKey >= '0' && tempKey <= '9') {
+              tempPin[pinIndex++] = tempKey;
+              tempPin[pinIndex] = '\0';
+              display.showPinProgress(tempPin); 
+            }
+            delay(50);
+          }
+
+          //Compare to see if Pins are the same
+          if(strcmp(tempPin, enteredPin) == 0) {
+            pinStore.savePin(enteredPin);
+            display.showMessage("Pin Updated");
+          } else {
+            display.showMessage("Mismatch, please try again");
+          }
+
           delay(2000);
+          display.clear();
+          pinIndex = 0;
         }
 
         else {
