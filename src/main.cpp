@@ -98,6 +98,9 @@ void CheckIfLockOut()
   }
 }
 
+/**
+ * @brief helper method to handle users pin entry until the user enters a complete pin.
+ */
 void handlePinEntry(char key)
 {
   if (pinIndex < PIN_LENGTH)
@@ -109,6 +112,9 @@ void handlePinEntry(char key)
   }
 }
 
+/**
+ * @brief helper method to handle pin validation, updating to new pin, and verification of the new pin.
+ */
 void handlePinValidation()
 {
   enteredPin[PIN_LENGTH] = '\0'; // null terminate string
@@ -230,7 +236,7 @@ void loop()
       {
         handlePinValidation();
       }
-      
+
       else if (key == '*')
       {
         // Reset user input on *
