@@ -12,11 +12,13 @@ This project is built using [PlatformIO](https://platformio.org/) for use with V
 
 ---
 
-### 1. 🧰 Install dependencies
+### 1. Install dependencies
 
 Ensure you have PlatformIO installed.
 
 #### On Linux/macOS:
+
+---
 
 ```bash
 pip install platformio
