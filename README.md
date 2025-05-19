@@ -12,32 +12,26 @@ This project is built using [PlatformIO](https://platformio.org/) for use with V
 
 ---
 
-### 1. Install dependencies
+###  Install dependencies
 
 Ensure you have PlatformIO installed.
 
 #### On Linux/macOS:
 
----
-
 ```bash
 pip install platformio
+```
+---
+### Features
+ Features
+ 4-digit PIN entry using 4x4 matrix keypad
 
+ LCD feedback for PIN progress and system messages
 
-#### 2. Clone this project
-git clone https://github.com/your-username/esp32-smart-lock
-cd esp32-smart-lock
+ Servo motor control for real-time locking
 
+ EEPROM-backed PIN storage
 
-##### Features
-4-digit PIN entry using 4x4 matrix keypad
+ PIN change functionality with confirmation
 
-LCD feedback for PIN progress and system messages
-
-Servo motor control for real-time locking
-
-EEPROM-backed PIN storage
-
-PIN change functionality with confirmation
-
-Lockout security after failed attempts
+ Lockout security after multiple failed attempts
