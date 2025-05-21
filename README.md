@@ -56,7 +56,7 @@ pip install platformio
 
  Common-ground connection between ESP32 and 12V supply
 
- ===
+ ---
 
  ### Wiring Notes
 
@@ -77,3 +77,4 @@ pip install platformio
     Flyback Diode: Cathode (|>) to +12V, Anode to collector
 
 ### Circuit
+![Image](https://github.com/user-attachments/assets/89624457-38a7-4417-8327-589315cad442)
