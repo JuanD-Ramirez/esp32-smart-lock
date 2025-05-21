@@ -9,8 +9,8 @@
 #include <LiquidCrystal.h>
 
 // LCD pin mapping to ESP32 GPIOs:
-// RS = GPIO 19, E = GPIO 18, D4 = GPIO 5, D5 = GPIO 4, D6 = GPIO 2, D7 = GPIO 15
-LiquidCrystal lcd(19, 18, 5, 4, 2, 15);
+// RS = GPIO 32, E = GPIO 33, D4 = GPIO 25, D5 = GPIO 26, D6 = GPIO 27, D7 = GPIO 14
+LiquidCrystal lcd(32, 33, 25, 26, 27, 14);
 
 /**
  * @brief Default constructor for DisplayManager.

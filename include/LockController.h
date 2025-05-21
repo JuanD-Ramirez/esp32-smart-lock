@@ -11,7 +11,6 @@
 #define LOCK_CONTROLLER_H
 
 #include <Arduino.h>
-#include <ESP32Servo.h>
 
 /**
  * @class LockController
@@ -23,7 +22,7 @@ public:
     /**
      * @brief Constructor for the LockController class
      */
-    LockController(int servoPin);
+    LockController(int controlPin);
 
     /**
      * @brief Initializes the servo motor
@@ -55,9 +54,8 @@ public:
     bool isLocked();
 
 private:
-    Servo servo; // The servo object managing hardware control
-    int pin;     // The GPIO pin connected to the servo
-    bool locked; // Tracks whether the servo is currently locked
+    int pin;
+    bool locked;
 };
 
 #endif

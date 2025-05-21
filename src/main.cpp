@@ -18,7 +18,7 @@ KeypadManager keypadMgr;
 DisplayManager display;
 
 // servo instance used to control lock
-LockController lockMotor(22);
+LockController lockMotor(21);
 
 /// Password Lenght
 const int PIN_LENGTH = 4;
@@ -221,7 +221,7 @@ void loop()
   CheckIfLockOut();
 
   char key = keypadMgr.getKey();
-
+  
   // if key is pressed
   if (key != '\0')
   {

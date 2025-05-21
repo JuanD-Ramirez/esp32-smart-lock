@@ -1,24 +1,24 @@
 /**
  * @file LockController.cpp
- * @brief Implementation of the lcok controller class for controlling a servo motor.
+ * @brief Implementation of the lockController class for controlling an electrical strike.
  */
 
 #include "LockController.h"
 
 /**
- * @brief Constructs a LockController object and stores the GPIO pins to be used for the servo signal.
+ * @brief Constructs a LockController object and stores the GPIO pins to be used for the lock signal.
  * Initially it has been set to lock.
  */
-LockController::LockController (int servoPin) {
-    pin = servoPin;
+LockController::LockController (int controlPin) {
+    pin = controlPin;
     locked = true;
 }
 
 /**
- * @brief Attahces the servo to the specified pin and initializes it.
+ * @brief Attahces the lock to the specified pin and initializes it.
  */
 void LockController::begin() {
-    servo.attach(pin);
+    pinMode(pin, OUTPUT); 
     lock();
 }
 
@@ -26,16 +26,16 @@ void LockController::begin() {
  * @brief roates the servo to the locked position.
  */
 void LockController::lock() {
-    servo.write(0);
+    digitalWrite(pin, LOW); //Locked when no voltage is applied
     locked = true;
 }
 
 /**
- * Rotates teh servo to the unlocked position.
+ * Rotates the servo to the unlocked position.
  */
 void LockController::unlock() {
-    servo.write(90);
-    locked = false;
+    digitalWrite(pin, HIGH); //unlocked when voltage is applied
+    locked = true;
 }
 
 /**
